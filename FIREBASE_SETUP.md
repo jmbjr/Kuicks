@@ -1,7 +1,7 @@
 # Kuicks Firebase Setup
 
-Status: **Draft for review**  
-Document version: **0.1-draft**  
+Status: **Approved alpha baseline**  
+Document version: **1.0-alpha**  
 Last updated: **2026-08-10**
 
 This document defines the planned Firebase boundary for Kuicks separate-phone multiplayer, persistence, completed-game history, and statistics. Firebase is **not required** for the approved Single-Device CPU Alpha. Do not add Firebase to the first playable build merely because this setup is documented.
@@ -334,4 +334,4 @@ Record these in `DECISIONS.md` when their implementation issue begins:
 
 ## 20. Approval gate
 
-This document is a **draft for review**. It does not authorize Firebase configuration changes, rule deployment, or online implementation. After explicit approval, update its status/version and commit that approval checkpoint.
+This document is the **approved Alpha v1 baseline** for future Firebase work. Firebase configuration changes, security-rule deployment, and online implementation still require their own staged issues and explicit approval.
