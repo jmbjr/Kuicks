@@ -1,8 +1,8 @@
 # Kuicks Product Requirements
 
-Status: **Draft for product-owner review**  
+Status: **Approved alpha baseline**  
 Product version: **Alpha v1**  
-Requirements version: **0.1-draft**  
+Requirements version: **1.0-alpha**  
 Rules dependency: **GAME_RULES.md 1.0-alpha (approved)**  
 Last updated: **2026-08-10**
 
@@ -403,8 +403,8 @@ The Single-Device CPU Alpha is acceptable only when all criteria below are met o
 
 If documents conflict, the approved rules govern game mechanics; the most recently approved requirement or recorded decision governs product scope. Conflicts must be resolved explicitly rather than inferred in code.
 
-## 15. Approval gate
+## 15. Approval record
 
-This draft requires explicit product-owner approval before it is marked as the Alpha v1 requirements baseline or committed to `main`.
+**Approved for alpha v1 by the product owner on 2026-08-10.**
 
 Approval of this document authorizes the next documentation stage. It does not by itself authorize gameplay implementation, Firebase changes, deployment, issue closure, or changes to the approved game rules.
