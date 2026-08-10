@@ -1,7 +1,7 @@
 # Kuicks User Guide
 
-Status: **Draft for review**  
-Document version: **0.1-draft**  
+Status: **Approved alpha baseline**  
+Document version: **1.0-alpha**  
 Last updated: **2026-08-10**
 
 This guide explains how players will use Kuicks. It describes the approved **Single-Device CPU Alpha** first and labels later modes clearly so planned features are not mistaken for available features.
@@ -320,4 +320,4 @@ This guide is ready as the Alpha v1 user baseline when:
 
 ## 19. Approval gate
 
-This document is a **draft for review**. After explicit approval, update its status to **Approved alpha baseline**, set its version to **1.0-alpha**, and commit the approval checkpoint before implementation relies on it.
+This document is the **Approved alpha baseline**. Changes that alter player-visible behavior require explicit approval and a new documented version.
