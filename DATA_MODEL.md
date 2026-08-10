@@ -1,7 +1,7 @@
 # Kuicks Data Model
 
-Status: **Draft for review**  
-Document version: **0.1-draft**  
+Status: **Approved alpha baseline**  
+Document version: **1.0-alpha**  
 Last updated: **2026-08-10**
 
 This document defines Kuicks data ownership, identity, persistence, synchronization, history, and migration requirements. It implements the boundaries established by the approved Alpha v1 rules, product requirements, modes/options, UX, and architecture documents.
@@ -542,4 +542,4 @@ Each choice must be recorded in `DECISIONS.md`, tested, and kept behind the appr
 
 ## 26. Approval gate
 
-This document is a **draft for review**. It does not become the Alpha v1 data-model baseline until the product owner explicitly approves it. Approval authorizes updating this header/version and committing the approval checkpoint; it does not by itself authorize gameplay implementation.
+This document is the **approved Alpha v1 data-model baseline**. Changes that materially affect identity, persistence, synchronization, scoring history, or migration behavior require a recorded decision and product-owner approval.
