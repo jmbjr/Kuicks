@@ -23,15 +23,18 @@
 
       <section class="launch-card" aria-labelledby="checkpoint-title">
         <span class="phase-badge">Phase 2 checkpoint</span>
-        <h2 id="checkpoint-title">The rules engine is ready.</h2>
-        <p>Kuicks can now validate and score complete games through deterministic code.</p>
+        <h2 id="checkpoint-title">Test the engine yourself.</h2>
+        <p>Run five deterministic checks against the actual Kuicks rules engine in this browser.</p>
         <div class="trail-preview" aria-label="Four Kuicks trails">
           <span class="trail trail--sun">1</span>
           <span class="trail trail--coral">2</span>
           <span class="trail trail--sky">3</span>
           <span class="trail trail--mint">4</span>
         </div>
-        <p class="next-up">Next up: deterministic CPU players.</p>
+        <button id="run-checks" class="run-button" type="button">Run engine checks</button>
+        <p id="run-summary" class="run-summary" role="status" aria-live="polite">Ready when you are.</p>
+        <ol id="check-results" class="check-results" aria-label="Engine check results"></ol>
+        <p class="next-up">Acceptance target: 5 of 5 checks pass.</p>
       </section>
 
       <footer>
