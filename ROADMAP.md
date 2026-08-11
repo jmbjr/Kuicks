@@ -149,4 +149,4 @@ The roadmap may change when implementation reveals a better dependency order. Ma
 
 ## Approval gate
 
-This document is a **draft for review**. After explicit approval, update its status to **Approved alpha baseline**, set its version to **1.0-alpha**, and commit the approval checkpoint.
+This document is the **Approved alpha baseline**, version **1.0-alpha**. Material changes require explicit approval and a new repository checkpoint.
