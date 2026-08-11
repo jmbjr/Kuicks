@@ -1,0 +1,22 @@
+.cell {
+  color: #26313d;
+  background: #d8dde3;
+  border-color: #fff8;
+}
+
+.cell--trail-sun { background: var(--sun); }
+.cell--trail-spark { background: var(--coral); }
+.cell--trail-wave { background: var(--sky); }
+.cell--trail-leaf { background: var(--mint); }
+
+.cell--marked {
+  color: #000;
+  font-size: clamp(.8rem, 3.5vw, 1.05rem);
+  font-weight: 1000;
+}
+
+.cell--skipped {
+  color: #87919d;
+  background: #343b45;
+  border-color: #4b5561;
+}

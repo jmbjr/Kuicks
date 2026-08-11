@@ -33,20 +33,29 @@ function renderSheet() {
     heading.innerHTML = `<strong>${trailNames[id]}</strong><span>${id === "sun" || id === "spark" ? "Rising" : "Falling"}</span>`;
     const cells = document.createElement("div"); cells.className = "trail-cells";
     const marked = human.sheet.trails[id].markedIndices;
+    const furthestMarked = marked.at(-1) ?? -1;
     TRAILS[id].values.forEach((value, index) => {
       const button = document.createElement("button"); button.type = "button"; button.textContent = value;
       const candidates = legal.filter((candidate) => candidate.trailId === id && candidate.index === index);
       if (marked.includes(index)) {
-        button.className = "cell cell--marked";
+        button.className = `cell cell--marked cell--trail-${id}`;
         button.textContent = "X";
         button.disabled = true;
         button.setAttribute("aria-label", `${trailNames[id]} ${value}, marked`);
       }
       else if (candidates.length) {
-        button.className = `cell cell--legal cell--legal-${id}`;
+        button.className = `cell cell--legal cell--trail-${id}`;
         button.setAttribute("aria-label", `${trailNames[id]} ${value}, legal ${demo.phase} choice`);
         button.addEventListener("click", () => applyChoice(candidates[0]));
-      } else { button.className = "cell"; button.disabled = true; }
+      } else if (index < furthestMarked) {
+        button.className = "cell cell--skipped";
+        button.disabled = true;
+        button.setAttribute("aria-label", `${trailNames[id]} ${value}, no longer available`);
+      } else {
+        button.className = "cell";
+        button.disabled = true;
+        button.setAttribute("aria-label", `${trailNames[id]} ${value}, not currently available`);
+      }
       cells.append(button);
     });
     row.append(heading, cells); return row;

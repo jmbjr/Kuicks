@@ -1,1 +1,1 @@
-export const BUILD_ID = "alpha-trail-highlights-2026.08.11";
+export const BUILD_ID = "alpha-trail-progress-2026.08.11";

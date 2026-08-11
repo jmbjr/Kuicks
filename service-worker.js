@@ -1,10 +1,11 @@
-const CACHE_NAME = "kuicks-play-surface-v6";
+const CACHE_NAME = "kuicks-play-surface-v7";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./css/tokens.css",
   "./css/app.css",
+  "./css/trail-progress.css",
   "./js/config.js",
   "./js/app.js",
   "./js/ui/play-surface.js",
