@@ -36,9 +36,14 @@ function renderSheet() {
     TRAILS[id].values.forEach((value, index) => {
       const button = document.createElement("button"); button.type = "button"; button.textContent = value;
       const candidates = legal.filter((candidate) => candidate.trailId === id && candidate.index === index);
-      if (marked.includes(index)) { button.className = "cell cell--marked"; button.disabled = true; button.setAttribute("aria-label", `${trailNames[id]} ${value}, marked`); }
+      if (marked.includes(index)) {
+        button.className = "cell cell--marked";
+        button.textContent = "X";
+        button.disabled = true;
+        button.setAttribute("aria-label", `${trailNames[id]} ${value}, marked`);
+      }
       else if (candidates.length) {
-        button.className = `cell cell--legal cell--${demo.phase}`;
+        button.className = `cell cell--legal cell--legal-${id}`;
         button.setAttribute("aria-label", `${trailNames[id]} ${value}, legal ${demo.phase} choice`);
         button.addEventListener("click", () => applyChoice(candidates[0]));
       } else { button.className = "cell"; button.disabled = true; }
