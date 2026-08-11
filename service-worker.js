@@ -1,4 +1,4 @@
-const CACHE_NAME = "kuicks-rules-lab-v3";
+const CACHE_NAME = "kuicks-cpu-lab-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,7 +7,9 @@ const APP_SHELL = [
   "./css/app.css",
   "./js/config.js",
   "./js/app.js",
-  "./js/test-lab.js",
+  "./js/cpu-lab.js",
+  "./js/cpu/choose-action.js",
+  "./js/cpu/run-game.js",
   "./js/game/random.js",
   "./js/rules/model.js",
   "./js/rules/legal-actions.js",

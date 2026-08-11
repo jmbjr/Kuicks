@@ -1,5 +1,5 @@
 import { BUILD_ID } from "./config.js";
-import { runEngineChecks } from "./test-lab.js";
+import { runCpuChecks } from "./cpu-lab.js";
 
 const buildLabel = document.querySelector("#build-id");
 const connectionLabel = document.querySelector("#connection-status");
@@ -33,12 +33,12 @@ function renderResults(results) {
 runButton.addEventListener("click", () => {
   runButton.disabled = true;
   runSummary.textContent = "Running checks…";
-  const results = runEngineChecks();
+  const results = runCpuChecks();
   renderResults(results);
   const passed = results.filter((result) => result.passed).length;
   runSummary.textContent = passed === results.length
-    ? `All ${passed} checks passed. Phase 2 verified in this browser.`
-    : `${passed} of ${results.length} checks passed. Phase 2 is not accepted.`;
+    ? `All ${passed} checks passed. Phase 3 verified in this browser.`
+    : `${passed} of ${results.length} checks passed. Phase 3 is not accepted.`;
   runSummary.dataset.outcome = passed === results.length ? "pass" : "fail";
   runButton.textContent = "Run checks again";
   runButton.disabled = false;
