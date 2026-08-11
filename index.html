@@ -13,34 +13,40 @@
   </head>
   <body>
     <main class="shell">
-      <header class="brand" aria-labelledby="app-title">
-        <div class="mark" aria-hidden="true">K</div>
-        <div>
-          <p class="eyebrow">Fast dice. Sharp choices.</p>
-          <h1 id="app-title">Kuicks</h1>
-        </div>
-      </header>
+      <header class="brand"><div class="mark" aria-hidden="true">K</div><div><p class="eyebrow">Fast dice. Sharp choices.</p><h1>Kuicks</h1></div></header>
 
-      <section class="launch-card" aria-labelledby="checkpoint-title">
-        <span class="phase-badge">Phase 3 checkpoint</span>
-        <h2 id="checkpoint-title">Put the CPUs through their paces.</h2>
-        <p>Run four visible checks against the real deterministic CPU policy and rules engine.</p>
-        <div class="trail-preview" aria-label="Four Kuicks trails">
-          <span class="trail trail--sun">1</span>
-          <span class="trail trail--coral">2</span>
-          <span class="trail trail--sky">3</span>
-          <span class="trail trail--mint">4</span>
-        </div>
-        <button id="run-checks" class="run-button" type="button">Run CPU checks</button>
-        <p id="run-summary" class="run-summary" role="status" aria-live="polite">Ready when you are.</p>
-        <ol id="check-results" class="check-results" aria-label="Engine check results"></ol>
-        <p class="next-up">Acceptance target: 4 of 4 checks pass.</p>
+      <section id="setup-view" class="panel setup" aria-labelledby="setup-title">
+        <span class="phase-badge">Phase 4 checkpoint</span>
+        <h2 id="setup-title">Build your table.</h2>
+        <p>Start a one-turn mobile play-surface demo. You’ll make real legal Table and Kick choices while the CPUs use their real policy.</p>
+        <form id="setup-form">
+          <label for="player-name">Your name</label>
+          <input id="player-name" name="playerName" maxlength="24" value="Player" autocomplete="nickname" required>
+          <label for="cpu-count">CPU opponents</label>
+          <select id="cpu-count" name="cpuCount"><option>1</option><option selected>2</option><option>3</option><option>4</option></select>
+          <button class="primary" type="submit">Start play-surface demo</button>
+          <p id="setup-error" class="error" role="alert"></p>
+        </form>
       </section>
 
-      <footer>
-        <span id="connection-status" role="status">Ready</span>
-        <span id="build-id">Build loading…</span>
-      </footer>
+      <section id="game-view" class="game" hidden aria-labelledby="turn-title">
+        <div class="turn-banner">
+          <span id="phase-label" class="phase-badge">Table choice</span>
+          <h2 id="turn-title">Your choice</h2>
+          <p id="instruction" aria-live="polite"></p>
+        </div>
+        <section class="dice-card" aria-label="Dice tray">
+          <div><span class="dice-label">Table dice</span><div id="table-dice" class="dice-row"></div></div>
+          <div><span class="dice-label">Trail dice</span><div id="trail-dice" class="dice-row dice-row--trails"></div></div>
+        </section>
+        <section class="sheet-card" aria-labelledby="sheet-title"><div class="section-heading"><h3 id="sheet-title">Your sheet</h3><span id="progress"></span></div><div id="human-sheet" class="score-sheet"></div></section>
+        <div id="actions" class="actions"></div>
+        <section class="opponents" aria-labelledby="opponents-title"><h3 id="opponents-title">Opponents</h3><div id="opponent-list"></div></section>
+        <section class="activity" aria-labelledby="activity-title"><h3 id="activity-title">Recent actions</h3><ol id="activity-log" aria-live="polite"></ol></section>
+        <button id="restart-demo" class="secondary" type="button" hidden>Try setup again</button>
+      </section>
+
+      <footer><span id="connection-status" role="status">Ready</span><span id="build-id">Build loading…</span></footer>
     </main>
     <script type="module" src="./js/app.js"></script>
   </body>
