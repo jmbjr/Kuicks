@@ -1,7 +1,7 @@
 # Kuicks Iteration Workflow
 
-Status: **Draft for review**  
-Document version: **0.1-draft**  
+Status: **Approved alpha baseline**  
+Document version: **1.0-alpha**  
 Last updated: **2026-08-11**
 
 This workflow defines how Kuicks moves from an issue to a tested GitHub Pages build. It intentionally favors small playable increments and direct Android feedback over process overhead.
@@ -113,6 +113,6 @@ A passing desktop check alone does not close a phone-facing issue.
 
 Emergency fixes and tiny documentation corrections may use a shortened loop, but must still be scoped, verified, and recorded. If a workflow step adds no useful confidence for the current change, keep it lightweight and explain the exception in the issue or commit.
 
-## 10. Approval gate
+## 10. Approval record
 
-This document is a **draft for review**. After explicit approval, update its status to **Approved alpha baseline**, set its version to **1.0-alpha**, and commit the approval checkpoint.
+Approved as the Kuicks Alpha v1 iteration workflow on **2026-08-11**.
