@@ -1,7 +1,7 @@
 # Kuicks Test Plan
 
-Status: **Draft for review**  
-Document version: **0.2-draft**  
+Status: **Approved alpha baseline**  
+Document version: **1.0-alpha**  
 Last updated: **2026-08-11**
 
 This plan defines the minimum practical testing needed while building the first Kuicks playable alpha: one human versus two CPU players, published through GitHub Pages and tested on an Android phone.
@@ -131,4 +131,4 @@ The first playable alpha is ready for user testing when:
 
 ## 7. Approval gate
 
-This document is a **draft for review**. After explicit approval, update its status to **Approved alpha baseline**, set its version to **1.0-alpha**, and commit the approval checkpoint.
+This document is the **Approved alpha baseline**. Expand it only after a complete playable alpha exists or observed failures justify additional coverage.
