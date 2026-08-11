@@ -21,7 +21,7 @@ function die(value, label, trailId = "") {
 function renderDice() {
   const { roll } = demo.state;
   $("#table-dice").replaceChildren(...roll.table.map((value, index) => die(value, `Table die ${index + 1}`)));
-  $("#trail-dice").replaceChildren(...TRAIL_IDS.map((id) => die(roll.trails[id], `${trailNames[id]} die`, id)));
+  $("#trail-dice").replaceChildren(...TRAIL_IDS.filter((id) => Object.hasOwn(roll.trails, id)).map((id) => die(roll.trails[id], `${trailNames[id]} die`, id)));
 }
 
 function renderSheet() {
@@ -71,6 +71,21 @@ function renderOpponents() {
   }));
 }
 
+function renderResults() {
+  const results = $("#results");
+  if (demo.phase !== "completed") { results.hidden = true; return; }
+  const winners = new Set(demo.state.result.winners);
+  const byId = new Map(demo.state.participants.map((participant) => [participant.id, participant]));
+  $("#result-list").replaceChildren(...[...demo.state.result.scores].sort((a, b) => b.total - a.total).map((score) => {
+    const row = document.createElement("div");
+    row.className = `result-row${winners.has(score.participantId) ? " result-row--winner" : ""}`;
+    const suffix = winners.has(score.participantId) ? (winners.size > 1 ? " — tied winner" : " — winner") : "";
+    row.innerHTML = `<span>${byId.get(score.participantId).name}${suffix}</span><strong>${score.total}</strong>`;
+    return row;
+  }));
+  results.hidden = false;
+}
+
 function renderActions() {
   const actions = $("#actions"); actions.replaceChildren();
   const pass = document.createElement("button"); pass.type = "button"; pass.className = "secondary";
@@ -78,10 +93,10 @@ function renderActions() {
   pass.addEventListener("click", () => applyChoice(null)); actions.append(pass);
 }
 
-function renderLog() { $("#activity-log").replaceChildren(...demo.log.map((text) => { const li = document.createElement("li"); li.textContent = text; return li; })); }
+function renderLog() { $("#activity-log").replaceChildren(...[...demo.log].reverse().map((text) => { const li = document.createElement("li"); li.textContent = text; return li; })); }
 
 function render() {
-  renderDice(); renderSheet(); renderOpponents(); renderLog();
+  renderDice(); renderSheet(); renderOpponents(); renderLog(); renderResults();
   const table = demo.state.roll.table; const total = table[0] + table[1];
   if (demo.phase === "table") {
     $("#phase-label").textContent = "Table choice"; $("#turn-title").textContent = "Choose a shared total";
@@ -90,8 +105,9 @@ function render() {
     $("#phase-label").textContent = "Kick choice"; $("#turn-title").textContent = "Choose a dice combination";
     $("#instruction").textContent = "Tap any outlined destination created by one Table die plus its trail die, or pass."; renderActions();
   } else {
-    $("#phase-label").textContent = "Checkpoint complete"; $("#turn-title").textContent = "Play surface verified";
-    $("#instruction").textContent = "You completed real Table and Kick decisions. CPU choices, marks, dice, and phases all rendered on this phone.";
+    const winnerNames = demo.state.result.winners.map((id) => demo.state.participants.find((participant) => participant.id === id).name);
+    $("#phase-label").textContent = "Game complete"; $("#turn-title").textContent = winnerNames.length > 1 ? "Tie game" : `${winnerNames[0]} wins!`;
+    $("#instruction").textContent = `Game ended by ${demo.state.result.cause === "fourStrikes" ? "four strikes" : "two closed trails"}. Final scores are below.`;
     $("#actions").replaceChildren(); $("#restart-demo").hidden = false;
   }
 }

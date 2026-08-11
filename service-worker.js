@@ -1,4 +1,4 @@
-const CACHE_NAME = "kuicks-play-surface-v7";
+const CACHE_NAME = "kuicks-complete-game-v8";
 const APP_SHELL = [
   "./",
   "./index.html",

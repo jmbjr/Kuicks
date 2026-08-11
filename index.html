@@ -17,15 +17,15 @@
       <header class="brand"><div class="mark" aria-hidden="true">K</div><div><p class="eyebrow">Fast dice. Sharp choices.</p><h1>Kuicks</h1></div></header>
 
       <section id="setup-view" class="panel setup" aria-labelledby="setup-title">
-        <span class="phase-badge">Phase 4 checkpoint</span>
+        <span class="phase-badge">Phase 5 checkpoint</span>
         <h2 id="setup-title">Build your table.</h2>
-        <p>Start a one-turn mobile play-surface demo. You’ll make real legal Table and Kick choices while the CPUs use their real policy.</p>
+        <p>Play a complete game against CPU opponents, see the final scores, and start another game.</p>
         <form id="setup-form">
           <label for="player-name">Your name</label>
           <input id="player-name" name="playerName" maxlength="24" value="Player" autocomplete="nickname" required>
           <label for="cpu-count">CPU opponents</label>
           <select id="cpu-count" name="cpuCount"><option>1</option><option selected>2</option><option>3</option><option>4</option></select>
-          <button class="primary" type="submit">Start play-surface demo</button>
+          <button class="primary" type="submit">Start game</button>
           <p id="setup-error" class="error" role="alert"></p>
         </form>
       </section>
@@ -44,7 +44,8 @@
         <div id="actions" class="actions"></div>
         <section class="opponents" aria-labelledby="opponents-title"><h3 id="opponents-title">Opponents</h3><div id="opponent-list"></div></section>
         <section class="activity" aria-labelledby="activity-title"><h3 id="activity-title">Recent actions</h3><ol id="activity-log" aria-live="polite"></ol></section>
-        <button id="restart-demo" class="secondary" type="button" hidden>Try setup again</button>
+        <section id="results" class="results" hidden aria-labelledby="results-title"><h3 id="results-title">Final scores</h3><div id="result-list"></div></section>
+        <button id="restart-demo" class="secondary" type="button" hidden>Play another game</button>
       </section>
 
       <footer><span id="connection-status" role="status">Ready</span><span id="build-id">Build loading…</span></footer>
