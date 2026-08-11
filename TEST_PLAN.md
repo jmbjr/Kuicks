@@ -1,312 +1,134 @@
 # Kuicks Test Plan
 
 Status: **Draft for review**  
-Document version: **0.1-draft**  
-Last updated: **2026-08-10**
+Document version: **0.2-draft**  
+Last updated: **2026-08-11**
 
-This plan defines how Kuicks will be verified from pure rules through staged Android-browser releases. The first implementation target is the approved **Single-Device CPU Alpha**: one human versus two deterministic CPU players, published through GitHub Pages.
+This plan defines the minimum practical testing needed while building the first Kuicks playable alpha: one human versus two CPU players, published through GitHub Pages and tested on an Android phone.
 
-## 1. Test objectives
+The goal before alpha is fast feedback and basic confidence—not exhaustive verification. Deeper automation and hardening begin after the complete game loop exists.
 
-Testing must demonstrate that Kuicks:
+## 1. Pre-alpha testing philosophy
 
-- implements the approved Alpha v1 rules exactly;
-- produces deterministic results for a known seed and command sequence;
-- prevents illegal, duplicate, or out-of-phase actions;
-- survives refresh without rerolling dice or repeating CPU actions;
-- remains usable at a 320 CSS pixel viewport;
-- works from the published GitHub Pages URL in an Android browser;
-- communicates trail meaning without relying on color;
-- preserves a clean boundary between normal games and future simulations;
-- can be diagnosed using game IDs, seeds, revisions, and build versions.
+During initial implementation:
 
-## 2. Sources of truth
+- test the behavior introduced by the current issue;
+- keep pure rule calculations easy to test;
+- run a quick desktop smoke test before publishing;
+- publish useful checkpoints to GitHub Pages;
+- test the main flow on the primary Android phone;
+- record bugs and continue iterating;
+- do not block progress on a comprehensive test suite.
 
-Tests derive expected behavior from:
+A test is valuable when it catches likely mistakes or makes the next change safer. Testing infrastructure must remain smaller than the feature it protects.
 
-1. `GAME_RULES.md`
-2. `PRODUCT_REQUIREMENTS.md`
-3. `GAME_MODES_AND_OPTIONS.md`
-4. `UX_DESIGN.md`
-5. `ARCHITECTURE.md`
-6. `DATA_MODEL.md`
-7. `USER_GUIDE.md`
+## 2. Minimum checks while building
 
-If documents disagree, implementation pauses until the conflict is resolved and recorded. Tests must not silently choose a new rule.
+### 2.1 Syntax and startup
 
-## 3. Test levels
+Before publishing a build:
 
-### 3.1 Pure unit tests
+- the project loads without fatal console errors;
+- referenced files and modules resolve;
+- the current screen renders in desktop Chrome or Chromium;
+- existing implemented actions still respond.
 
-Unit tests cover deterministic functions without DOM, storage, timers, Firebase, or network access.
+### 2.2 Rules engine
 
-Required areas:
+As each rule is implemented, add a small focused automated test when practical. Before the first complete playable build, cover at least:
 
-- seeded die generation;
-- legal Table destinations;
-- legal Kick combinations and destinations;
-- trail progression in both directions;
-- closure eligibility after five prior marks;
-- seals and global trail closure;
-- strike assignment;
-- end-condition detection;
-- triangular trail scoring;
-- final totals and shared winners;
-- command validation;
-- schema validation and migration;
-- deterministic CPU choice;
-- settings and snapshot immutability.
-
-Every rule boundary needs tests immediately below, at, and above the boundary.
-
-### 3.2 Engine sequence tests
-
-Sequence tests apply commands to complete or partial games and verify:
-
-- phase order;
-- active-player rotation;
-- simultaneous Table resolution;
-- no Kick stage after an end condition during Table resolution;
-- exactly one strike when the active player makes no mark;
-- revision increments;
-- accepted command IDs prevent duplicate application;
-- replaying the same seed and commands gives the same state;
-- legal command sequences never violate engine invariants.
-
-### 3.3 CPU tests
-
-CPU behavior must be testable without real-time delays.
-
-Verify that each CPU:
-
-- chooses only legal actions;
-- returns the same decision for the same state, policy, and seed;
-- handles no-legal-move states;
-- may decline only as its approved policy permits;
-- cannot close an ineligible trail;
-- does not act twice after refresh or repeated scheduling;
-- completes large seeded batches without invalid state.
-
-Action delay is a presentation setting and must not change the selected move.
-
-### 3.4 Persistence tests
-
-Persistence tests verify:
-
-- round-trip save and restore;
-- exact restoration of roll, phase, active player, sheets, strikes, random state, revision, and accepted commands;
-- refresh before and after each accepted action;
-- recovery while a CPU action is pending;
-- rejection of corrupt or unsupported data with a safe message;
-- sequential migration of supported older schemas;
-- confirmation before replacing an unfinished game;
-- isolation between preferences, profiles, active-game pointer, and game snapshots.
-
-### 3.5 UI and accessibility tests
-
-Test the full human flow with touch and keyboard.
-
-Verify:
-
-- legal cells and combinations are clear;
-- disabled controls cannot dispatch commands;
-- Table and Kick stages are visually and textually distinct;
-- trail names, icons, directions, and patterns carry meaning without color;
-- current player, CPU activity, closures, strikes, and end state are announced clearly;
-- focus remains sensible after actions and dialogs;
-- repeated taps do not duplicate actions;
-- reduced-motion preferences are respected;
-- text enlargement does not hide essential actions;
-- no primary flow requires horizontal page scrolling at 320 CSS pixels.
-
-Automated accessibility checks supplement, but do not replace, manual keyboard, screen-reader, contrast, and touch testing.
-
-### 3.6 PWA and deployment tests
-
-For each approved playable build:
-
-- publish through GitHub Pages;
-- load it from a clean Android browser session;
-- verify manifest and icons;
-- install as a PWA when supported;
-- confirm the displayed build version matches the tested commit;
-- refresh and reopen without losing a compatible active game;
-- verify cached single-device play after an initial online load;
-- publish a newer build and verify cache update behavior;
-- confirm offline status does not block a valid cached game.
-
-Firebase and separate-phone tests are deferred until their implementation issues begin.
-
-## 4. Required rule cases
-
-At minimum, automated cases must cover:
-
-| Area | Required cases |
-|---|---|
-| Dice | values stay within 1–6; same seed repeats; continued random state survives restore |
-| Progression | first mark; legal later mark; same/earlier value rejected; skipped cells remain unavailable |
-| Closure | 4, 5, and 6 prior marks; final value; seal awarded once; globally closed trail rejects later marks |
-| Table | accept, decline, multiple participants, simultaneous same-trail closure |
-| Kick | either neutral die, matching colored die, duplicate totals, non-active player rejected |
-| Strike | neither action; Table only; Kick only; both actions; fourth strike ends game |
-| End | first closure; second closure; fourth strike; end during Table; no later Kick |
-| Score | 0–11 effective marks; seal contribution; strike deductions; negative totals; tied winners |
-| Commands | stale revision; duplicate command ID; invalid phase; invalid participant; post-game command |
-| Resume | every phase boundary; pending CPU; completed game; corrupt snapshot |
-
-## 5. Deterministic fixtures
-
-Maintain small, readable fixtures for important states rather than depending only on random play:
-
-- fresh game;
 - rising and falling trail progression;
-- closure ineligible and eligible;
-- one trail already closed;
-- game one action from a second closure;
-- player on three strikes;
-- no legal Table action;
-- no legal Kick action;
-- tied final scores;
-- pending CPU action;
-- migrated historical snapshot.
+- rejection of an illegal mark;
+- trail closure eligibility and seal scoring;
+- strikes and the fourth-strike end condition;
+- the two-closed-trails end condition;
+- final score calculation;
+- CPUs selecting only legal actions.
 
-Each fixture records its schema version and must pass validation before use.
+These tests may use fixed dice and hand-authored game states. A large fixture system, randomized simulation harness, and exhaustive boundary matrix are deferred.
 
-## 6. Simulation-assisted testing
+### 2.3 Playable-flow smoke test
 
-A fast in-memory harness may run thousands of seeded CPU games to detect:
+Once the full loop exists, verify that:
 
-- illegal states;
-- nontermination;
-- impossible scores;
-- revision or phase anomalies;
-- nondeterministic replays;
-- CPU policy regressions.
+1. A game starts with one human and two CPUs.
+2. Dice roll and the Table choice can be accepted or skipped.
+3. The active human can make or skip a Kick choice.
+4. CPU turns finish without getting stuck.
+5. Trails advance and close.
+6. Strikes are assigned.
+7. The game ends and displays final scores and a winner.
+8. A new game can start.
 
-These are test or experiment records, not ordinary family games. High-speed runs must not write each game to Firestore or permanent family statistics.
+One complete successful game is enough for the first alpha checkpoint. Bugs found during play become issues or follow-up work.
 
-Simulation success does not replace targeted rule assertions or phone testing.
+### 2.4 Android phone check
 
-## 7. Alpha test matrix
+For each meaningful playable checkpoint:
 
-The minimum release matrix is:
+- deploy the build through GitHub Pages;
+- open the published URL in Android Chrome;
+- confirm the main controls are readable and tappable in portrait;
+- complete the newly implemented flow;
+- note clipping, unwanted horizontal scrolling, confusing states, or touch problems.
 
-| Surface | Minimum coverage |
-|---|---|
-| Automated | Current project-supported test runtime |
-| Desktop sanity | Current Chrome or Chromium |
-| Android browser | Current Chrome on the primary test phone |
-| Narrow viewport | 320 CSS px portrait |
-| Orientation | Portrait required; landscape sanity check |
-| Input | Touch required; keyboard sanity check |
-| Network | Online first load; cached offline continuation |
-| Lifecycle | Refresh, browser close/reopen, installed-PWA reopen |
-| Players | One human plus 1, 2, and 4 CPUs; two CPUs is the main path |
+The primary test target is the user's actual Android phone. Broad device and browser coverage is deferred.
 
-Additional devices and browsers are useful evidence but do not replace the minimum matrix.
+## 3. Issue-level acceptance
 
-## 8. Staged implementation gates
+Each implementation issue should contain only the testing relevant to that issue:
 
-### Gate A: Shell
+- a short expected-behavior checklist;
+- important edge cases known at the time;
+- any focused automated checks worth adding;
+- a short Android test procedure once the behavior is deployable.
 
-- GitHub Pages loads on Android.
-- Layout works at 320 CSS pixels.
-- Build version is visible.
-- PWA metadata is valid.
-- No gameplay correctness claim is made.
+The issue remains open while the published build is being tested and closes after explicit approval.
 
-### Gate B: Pure engine
+## 4. What blocks the first playable alpha
 
-- Required rule unit and sequence tests pass.
-- Seeded replays are deterministic.
-- No rendering or storage is required to run the tests.
+A build is not ready for the first alpha playtest if it:
 
-### Gate C: CPU and setup
+- cannot start or finish the main one-human-versus-two-CPU game;
+- permits an obvious illegal mark;
+- calculates closure, strikes, scoring, or the winner incorrectly;
+- leaves a CPU turn permanently stuck;
+- loses essential controls off-screen or makes them unusable on the primary phone;
+- crashes or becomes unrecoverable during an ordinary game.
 
-- One human and configurable CPU participants can be created.
-- CPUs choose legal deterministic actions without UI timers in tests.
-- Profile IDs are distinct from display names.
+Minor visual defects, incomplete polish, limited accessibility, and missing recovery behavior may remain if they are visible and recorded.
 
-### Gate D: Playable game
+## 5. Deferred hardening
 
-- A complete one-human-versus-two-CPU game can finish.
-- All scoring and end conditions match the engine.
-- Android touch flow is usable.
+After a complete alpha is playable, expand the test plan based on the failures actually observed. Later hardening may include:
 
-### Gate E: Recovery
+- exhaustive rule-boundary and command-sequence tests;
+- deterministic replay verification;
+- duplicate-command and repeated-tap protection;
+- refresh during every phase and pending CPU action;
+- save-schema validation and migration fixtures;
+- corrupt-save recovery;
+- large seeded CPU simulation batches;
+- keyboard, screen-reader, contrast, zoom, and reduced-motion passes;
+- PWA installation, offline continuation, and cache-update testing;
+- multiple Android devices, viewport sizes, and browsers;
+- automated deployment and regression checks;
+- detailed diagnostic capture using game IDs, seeds, revisions, and build versions.
 
-- Refresh at every phase restores exact state.
-- Pending CPU work resumes once.
-- Duplicate taps and commands do not duplicate effects.
+These remain architectural goals, but they are not prerequisites for building or publishing the first playable alpha.
 
-### Gate F: Alpha refinement
+## 6. First alpha checkpoint
 
-- Accessibility, offline, install, cache update, error states, and phone-test checklist pass.
-- User approval is recorded before the implementation issue closes.
+The first playable alpha is ready for user testing when:
 
-## 9. Issue-level test requirements
+1. Focused tests cover the implemented core rules.
+2. A desktop smoke test passes.
+3. One human-versus-two-CPU game can finish.
+4. The build is published through GitHub Pages.
+5. The main game flow is usable in portrait on the primary Android phone.
+6. Known problems and deferred hardening items are recorded.
+7. The issue remains open until the user tests and approves the build.
 
-Every implementation issue must include:
+## 7. Approval gate
 
-- behavior under test;
-- relevant edge cases;
-- automated acceptance tests;
-- manual Android phone steps;
-- expected results;
-- dependencies;
-- build or commit identifier;
-- evidence needed for approval.
-
-An issue remains open while the user tests the published build. It closes only after explicit approval.
-
-## 10. Defect reporting
-
-A useful defect report includes:
-
-- issue number;
-- GitHub Pages URL;
-- commit/build version;
-- phone, Android, browser, and installation mode;
-- viewport/orientation and display scaling when relevant;
-- game ID, seed, revision, phase, and active participant;
-- exact steps;
-- expected and actual result;
-- screenshot or recording when useful;
-- whether refresh reproduces or changes the problem.
-
-For duplicate CPU actions or divergent replay, preserve the saved snapshot and recent command history when possible.
-
-## 11. Release-blocking failures
-
-The Alpha build must not be approved with any known defect that:
-
-- permits an illegal mark;
-- produces incorrect scoring, closure, strike, or winner results;
-- changes a deterministic replay;
-- loses or duplicates an accepted action;
-- rerolls or double-runs a CPU after refresh;
-- prevents completion of the main one-human-versus-two-CPU flow;
-- makes essential controls unusable at 320 CSS pixels;
-- depends on color alone;
-- silently discards an active game;
-- serves an old build without a recoverable update path.
-
-Lower-severity cosmetic defects may be deferred only when recorded in an issue and explicitly accepted.
-
-## 12. Completion criteria
-
-The Single-Device CPU Alpha is test-complete when:
-
-1. All required automated tests pass from a clean checkout.
-2. The published GitHub Pages commit matches the reviewed build.
-3. One-human-versus-two-CPU play completes on the Android test phone.
-4. At least one full game has been tested across refresh/reopen boundaries.
-5. Seeded replay and duplicate-command protections are verified.
-6. 320 px, color-independent, touch, keyboard, and reduced-motion checks pass.
-7. Offline continuation works after a successful initial load.
-8. Known limitations are documented.
-9. The user explicitly approves the staged build.
-
-## 13. Approval gate
-
-This document is a **draft for review**. After explicit approval, update its status to **Approved alpha baseline**, set its version to **1.0-alpha**, and commit the approval checkpoint before implementation relies on it.
+This document is a **draft for review**. After explicit approval, update its status to **Approved alpha baseline**, set its version to **1.0-alpha**, and commit the approval checkpoint.
