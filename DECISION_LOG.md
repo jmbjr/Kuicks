@@ -1,7 +1,7 @@
 # Kuicks Decision Log
 
-Status: **Draft for review**  
-Document version: **0.1-draft**  
+Status: **Approved alpha baseline**  
+Document version: **1.0-alpha**  
 Last updated: **2026-08-11**
 
 This log records decisions that materially shape Kuicks. It is a short index of why the project follows its current path; approved specifications remain the authoritative source for details.
@@ -89,4 +89,4 @@ Do not rewrite history when a material decision changes. Add a new entry that na
 
 ## Approval gate
 
-This document is a **draft for review**. After explicit approval, update its status to **Approved alpha baseline**, set its version to **1.0-alpha**, and commit the approval checkpoint.
+This document is the **approved Alpha v1 baseline**. Future material changes require explicit approval and a new decision entry when they supersede an accepted decision.
