@@ -1,0 +1,18 @@
+{
+  "name": "Kuicks",
+  "short_name": "Kuicks",
+  "description": "A quick, tactical dice game for the whole table.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#081526",
+  "theme_color": "#10233f",
+  "icons": [
+    {
+      "src": "./assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

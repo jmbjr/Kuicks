@@ -1,0 +1,15 @@
+:root {
+  color-scheme: dark;
+  --ink: #f7fbff;
+  --muted: #b7c5d8;
+  --navy: #10233f;
+  --navy-deep: #081526;
+  --panel: rgba(20, 45, 76, 0.86);
+  --line: rgba(255, 255, 255, 0.14);
+  --sun: #ffd166;
+  --coral: #ff6b6b;
+  --sky: #55c2ff;
+  --mint: #65d6ad;
+  --radius: 1.25rem;
+  --shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.35);
+}

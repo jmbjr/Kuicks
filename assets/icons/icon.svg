@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Kuicks app icon">
+  <rect width="512" height="512" rx="112" fill="#10233f"/>
+  <path d="M112 84h92v135L321 84h115L292 242l151 186H326L204 271v157h-92z" fill="#ffd166"/>
+  <circle cx="408" cy="108" r="36" fill="#65d6ad"/>
+</svg>
