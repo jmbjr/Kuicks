@@ -1,4 +1,4 @@
-const CACHE_NAME = "kuicks-shell-v1";
+const CACHE_NAME = "kuicks-rules-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
