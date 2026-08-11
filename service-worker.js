@@ -1,4 +1,4 @@
-const CACHE_NAME = "kuicks-play-surface-v5";
+const CACHE_NAME = "kuicks-play-surface-v6";
 const APP_SHELL = [
   "./",
   "./index.html",
