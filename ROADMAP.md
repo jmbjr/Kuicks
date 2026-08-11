@@ -1,7 +1,7 @@
 # Kuicks Roadmap
 
-Status: **Draft for review**  
-Document version: **0.1-draft**  
+Status: **Approved alpha baseline**  
+Document version: **1.0-alpha**  
 Last updated: **2026-08-11**
 
 This roadmap prioritizes the shortest dependable path to a playable Kuicks game: one human versus two computer players, deployed through GitHub Pages and tested in an Android browser.
