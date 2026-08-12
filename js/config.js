@@ -1,1 +1,1 @@
-export const BUILD_ID = "alpha-all-player-summary-2026.08.12";
+export const BUILD_ID = "issue-7-active-game-persistence-2026.08.12";

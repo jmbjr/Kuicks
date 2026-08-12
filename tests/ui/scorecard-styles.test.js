@@ -11,9 +11,9 @@ test("scorecard cell states have one authoritative, cache-versioned stylesheet",
     read("service-worker.js"),
   ]);
 
-  assert.match(html, /css\/app\.css\?v=13/);
+  assert.match(html, /css\/app\.css\?v=14/);
   assert.doesNotMatch(html, /trail-progress\.css/);
-  assert.match(serviceWorker, /css\/app\.css\?v=13/);
+  assert.match(serviceWorker, /css\/app\.css\?v=14/);
 
   assert.match(css, /\.trail-row--sun\s*\{[^}]*background:\s*var\(--sun\)/);
   assert.match(css, /\.trail-row--spark\s*\{[^}]*background:\s*var\(--coral\)/);

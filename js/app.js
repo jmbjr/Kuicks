@@ -2,6 +2,7 @@ import { BUILD_ID } from "./config.js";
 import { createPlaySurfaceDemo, chooseTable, chooseKick } from "./ui/play-surface.js";
 import { TRAILS, TRAIL_IDS } from "./rules/model.js";
 import { createSummaryModel, SUMMARY_LAYOUTS } from "./ui/all-player-summary.js";
+import { saveActiveGame } from "./game/persistence.js";
 
 const $ = (selector) => document.querySelector(selector);
 let demo = null;
@@ -159,6 +160,7 @@ function render() {
 
 function applyChoice(choice) {
   demo = demo.phase === "table" ? chooseTable(demo, choice) : chooseKick(demo, choice);
+  saveActiveGame(demo);
   render();
 }
 
@@ -166,6 +168,7 @@ $("#setup-form").addEventListener("submit", (event) => {
   event.preventDefault(); const name = $("#player-name").value.trim();
   if (!name) { $("#setup-error").textContent = "Enter your name to start."; return; }
   demo = createPlaySurfaceDemo(name, Number($("#cpu-count").value), 20260811);
+  saveActiveGame(demo);
   $("#setup-view").hidden = true; $("#game-view").hidden = false; render();
 });
 $("#restart-demo").addEventListener("click", () => location.reload());
