@@ -1,1 +1,1 @@
-export const BUILD_ID = "alpha-trail-tinted-future-cells-2026.08.12";
+export const BUILD_ID = "alpha-all-player-summary-2026.08.12";

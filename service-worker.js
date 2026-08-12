@@ -1,12 +1,13 @@
-const CACHE_NAME = "kuicks-trail-tinted-future-cells-v12";
+const CACHE_NAME = "kuicks-all-player-summary-v13";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./css/tokens.css?v=12",
-  "./css/app.css?v=12",
+  "./css/tokens.css?v=13",
+  "./css/app.css?v=13",
   "./js/config.js",
-  "./js/app.js?v=12",
+  "./js/app.js?v=13",
+  "./js/ui/all-player-summary.js",
   "./js/ui/play-surface.js",
   "./js/cpu/choose-action.js",
   "./js/cpu/run-game.js",

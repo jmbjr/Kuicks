@@ -1,9 +1,11 @@
 import { BUILD_ID } from "./config.js";
 import { createPlaySurfaceDemo, chooseTable, chooseKick } from "./ui/play-surface.js";
 import { TRAILS, TRAIL_IDS } from "./rules/model.js";
+import { createSummaryModel, SUMMARY_LAYOUTS } from "./ui/all-player-summary.js";
 
 const $ = (selector) => document.querySelector(selector);
 let demo = null;
+let summaryLayout = SUMMARY_LAYOUTS.PLAYERS;
 const trailNames = { sun: "Sun", spark: "Spark", wave: "Wave", leaf: "Leaf" };
 
 $("#build-id").textContent = `Build ${BUILD_ID}`;
@@ -63,12 +65,55 @@ function renderSheet() {
   $("#progress").textContent = `${human.sheet.strikes} / 4 strikes`;
 }
 
-function renderOpponents() {
-  $("#opponent-list").replaceChildren(...demo.state.participants.slice(1).map((cpu) => {
-    const card = document.createElement("article"); card.className = "opponent-card";
-    const marks = Object.values(cpu.sheet.trails).reduce((sum, trail) => sum + trail.markedIndices.length, 0);
-    card.innerHTML = `<strong>${cpu.name}</strong><span>${marks} marks · ${cpu.sheet.strikes} strikes</span>`; return card;
-  }));
+function miniTrail(participant, trailId, showName = false) {
+  const trail = participant.sheet.trails[trailId];
+  const furthest = trail.markedIndices.at(-1) ?? -1;
+  const row = document.createElement("div"); row.className = `mini-trail mini-trail--${trailId}`;
+  const label = document.createElement("span"); label.className = "mini-label";
+  label.textContent = showName ? participant.name : trailNames[trailId];
+  const cells = document.createElement("span"); cells.className = "mini-cells"; cells.setAttribute("aria-hidden", "true");
+  TRAILS[trailId].values.forEach((_, index) => {
+    const cell = document.createElement("i");
+    cell.className = trail.markedIndices.includes(index) ? "mini-cell mini-cell--marked" : index < furthest ? "mini-cell mini-cell--skipped" : "mini-cell";
+    cells.append(cell);
+  });
+  const points = document.createElement("strong"); points.className = "mini-points";
+  points.textContent = participant.score.trails[trailId].points;
+  row.setAttribute("aria-label", `${participant.name}, ${trailNames[trailId]}: ${trail.markedIndices.length} marks, ${points.textContent} points`);
+  row.append(label, cells, points); return row;
+}
+
+function playerHeader(participant) {
+  const heading = document.createElement("div"); heading.className = "mini-player-heading";
+  const name = document.createElement("strong"); name.append(participant.name);
+  if (participant.active) {
+    const chip = document.createElement("span"); chip.className = "active-chip"; chip.textContent = "Active"; name.append(" ", chip);
+  }
+  const score = document.createElement("span"); score.textContent = `${participant.score.total} pts · ${participant.sheet.strikes}/4 strikes`;
+  heading.append(name, score);
+  return heading;
+}
+
+function renderPlayerSummary() {
+  const model = createSummaryModel(demo.state, summaryLayout);
+  const root = $("#player-summary"); root.className = `player-summary player-summary--${summaryLayout}`;
+  if (summaryLayout === SUMMARY_LAYOUTS.PLAYERS) {
+    root.replaceChildren(...model.participants.map((participant) => {
+      const card = document.createElement("article"); card.className = `mini-player${participant.active ? " mini-player--active" : ""}`;
+      card.append(playerHeader(participant), ...TRAIL_IDS.map((id) => miniTrail(participant, id))); return card;
+    }));
+  } else {
+    root.replaceChildren(...model.trails.map(({ trailId, participants }) => {
+      const group = document.createElement("section"); group.className = `mini-group mini-group--${trailId}`;
+      const title = document.createElement("h4"); title.textContent = trailNames[trailId];
+      group.append(title, ...participants.map((participant) => miniTrail(participant, trailId, true))); return group;
+    }));
+  }
+  const active = demo.state.participants[demo.state.currentSeat];
+  $("#summary-active").textContent = `${active.name} is active`;
+  const toggle = $("#summary-toggle");
+  toggle.textContent = summaryLayout === SUMMARY_LAYOUTS.PLAYERS ? "View by trail" : "View by player";
+  toggle.setAttribute("aria-pressed", String(summaryLayout === SUMMARY_LAYOUTS.TRAILS));
 }
 
 function renderResults() {
@@ -96,7 +141,7 @@ function renderActions() {
 function renderLog() { $("#activity-log").replaceChildren(...[...demo.log].reverse().map((text) => { const li = document.createElement("li"); li.textContent = text; return li; })); }
 
 function render() {
-  renderDice(); renderSheet(); renderOpponents(); renderLog(); renderResults();
+  renderDice(); renderSheet(); renderPlayerSummary(); renderLog(); renderResults();
   const table = demo.state.roll.table; const total = table[0] + table[1];
   if (demo.phase === "table") {
     $("#phase-label").textContent = "Table choice"; $("#turn-title").textContent = "Choose a shared total";
@@ -124,5 +169,9 @@ $("#setup-form").addEventListener("submit", (event) => {
   $("#setup-view").hidden = true; $("#game-view").hidden = false; render();
 });
 $("#restart-demo").addEventListener("click", () => location.reload());
+$("#summary-toggle").addEventListener("click", () => {
+  summaryLayout = summaryLayout === SUMMARY_LAYOUTS.PLAYERS ? SUMMARY_LAYOUTS.TRAILS : SUMMARY_LAYOUTS.PLAYERS;
+  renderPlayerSummary();
+});
 
 if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js"));

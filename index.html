@@ -7,8 +7,8 @@
     <meta name="description" content="Kuicks — a quick, tactical dice game for the whole table.">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./css/tokens.css?v=12">
-    <link rel="stylesheet" href="./css/app.css?v=12">
+    <link rel="stylesheet" href="./css/tokens.css?v=13">
+    <link rel="stylesheet" href="./css/app.css?v=13">
     <title>Kuicks</title>
   </head>
   <body>
@@ -41,7 +41,10 @@
         </section>
         <section class="sheet-card" aria-labelledby="sheet-title"><div class="section-heading"><h3 id="sheet-title">Your sheet</h3><span id="progress"></span></div><div id="human-sheet" class="score-sheet"></div></section>
         <div id="actions" class="actions"></div>
-        <section class="opponents" aria-labelledby="opponents-title"><h3 id="opponents-title">Opponents</h3><div id="opponent-list"></div></section>
+        <section class="opponents summary-card" aria-labelledby="summary-title">
+          <div class="section-heading summary-heading"><div><h3 id="summary-title">All players</h3><span id="summary-active"></span></div><button id="summary-toggle" class="summary-toggle" type="button" aria-pressed="false">View by trail</button></div>
+          <div id="player-summary" class="player-summary" aria-live="polite"></div>
+        </section>
         <section class="activity" aria-labelledby="activity-title"><h3 id="activity-title">Recent actions</h3><ol id="activity-log" aria-live="polite"></ol></section>
         <section id="results" class="results" hidden aria-labelledby="results-title"><h3 id="results-title">Final scores</h3><div id="result-list"></div></section>
         <button id="restart-demo" class="secondary" type="button" hidden>Play another game</button>
@@ -49,6 +52,6 @@
 
       <footer><span id="connection-status" role="status">Ready</span><span id="build-id">Build loading…</span></footer>
     </main>
-    <script type="module" src="./js/app.js?v=12"></script>
+    <script type="module" src="./js/app.js?v=13"></script>
   </body>
 </html>

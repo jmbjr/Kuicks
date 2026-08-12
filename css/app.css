@@ -338,6 +338,101 @@ h3 {
   color: var(--muted);
   font-size: 0.78rem;
 }
+.summary-heading {
+  align-items: center;
+}
+.summary-heading > div > span {
+  display: block;
+  margin-top: 0.18rem;
+}
+.summary-toggle {
+  min-height: 2.5rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #ffffff45;
+  border-radius: 0.65rem;
+  color: var(--ink);
+  background: #294665;
+  font-size: 0.72rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+.player-summary {
+  display: grid;
+  gap: 0.55rem;
+}
+.mini-player,
+.mini-group {
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: #0b1c31;
+}
+.mini-player--active {
+  border-color: var(--sun);
+  box-shadow: inset 0.2rem 0 var(--sun);
+}
+.mini-player-heading,
+.mini-trail {
+  display: grid;
+  grid-template-columns: minmax(3.2rem, auto) 1fr 1.8rem;
+  align-items: center;
+  gap: 0.35rem;
+}
+.mini-player-heading {
+  grid-template-columns: 1fr auto;
+  margin-bottom: 0.35rem;
+  font-size: 0.78rem;
+}
+.mini-player-heading > span,
+.mini-label,
+.mini-points {
+  font-size: 0.64rem;
+}
+.mini-player-heading > span,
+.mini-label {
+  color: var(--muted);
+}
+.active-chip {
+  padding: 0.12rem 0.3rem;
+  border-radius: 999px;
+  color: var(--navy-deep);
+  background: var(--sun);
+  font-size: 0.52rem;
+  text-transform: uppercase;
+}
+.mini-trail + .mini-trail {
+  margin-top: 0.2rem;
+}
+.mini-cells {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  gap: 0.1rem;
+}
+.mini-cell {
+  min-width: 0;
+  height: 0.42rem;
+  border-radius: 0.1rem;
+  background: #ffffff32;
+}
+.mini-cell--skipped {
+  background: #02070d;
+}
+.mini-trail--sun .mini-cell--marked { background: var(--sun); }
+.mini-trail--spark .mini-cell--marked { background: var(--coral); }
+.mini-trail--wave .mini-cell--marked { background: var(--sky); }
+.mini-trail--leaf .mini-cell--marked { background: var(--mint); }
+.mini-points {
+  color: var(--ink);
+  text-align: right;
+}
+.mini-group h4 {
+  margin: 0 0 0.32rem;
+  font-size: 0.72rem;
+}
+.mini-group--sun { border-left: 0.25rem solid var(--sun); }
+.mini-group--spark { border-left: 0.25rem solid var(--coral); }
+.mini-group--wave { border-left: 0.25rem solid var(--sky); }
+.mini-group--leaf { border-left: 0.25rem solid var(--mint); }
 .activity ol {
   margin: 0.6rem 0 0;
   padding-left: 1.2rem;
@@ -393,4 +488,7 @@ footer {
   .cell--marked {
     font-size: 0.8rem;
   }
+  .opponents { padding: 0.6rem; }
+  .mini-player, .mini-group { padding: 0.4rem; }
+  .mini-player-heading, .mini-trail { gap: 0.22rem; }
 }
