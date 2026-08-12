@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { ACTIVE_GAME_SCHEMA_VERSION, ACTIVE_GAME_STORAGE_KEY, createActiveGameEnvelope, loadActiveGame, saveActiveGame } from "../../js/game/persistence.js";
 import { chooseKick, chooseTable, createPlaySurfaceDemo } from "../../js/ui/play-surface.js";
+import { readFile } from "node:fs/promises";
 
 function memoryStorage() {
   const values = new Map();
@@ -102,4 +103,16 @@ test("completed, incompatible, and malformed saves are not offered for continuat
   envelope.status = "completed";
   storage.setItem(ACTIVE_GAME_STORAGE_KEY, JSON.stringify(envelope));
   assert.equal(loadActiveGame(storage), null);
+});
+
+test("browser entrypoint and offline shell use the same cache-busted persistence module", async () => {
+  const [app, html, serviceWorker] = await Promise.all([
+    readFile(new URL("../../js/app.js", import.meta.url), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../../service-worker.js", import.meta.url), "utf8"),
+  ]);
+  assert.match(html, /js\/app\.js\?v=16/);
+  assert.match(app, /game\/persistence\.js\?v=16/);
+  assert.match(serviceWorker, /js\/app\.js\?v=16/);
+  assert.match(serviceWorker, /game\/persistence\.js\?v=16/);
 });

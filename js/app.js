@@ -2,7 +2,7 @@ import { BUILD_ID } from "./config.js";
 import { createPlaySurfaceDemo, chooseTable, chooseKick } from "./ui/play-surface.js";
 import { TRAILS, TRAIL_IDS } from "./rules/model.js";
 import { createSummaryModel, SUMMARY_LAYOUTS } from "./ui/all-player-summary.js";
-import { loadActiveGame, saveActiveGame } from "./game/persistence.js";
+import { loadActiveGame, saveActiveGame } from "./game/persistence.js?v=16";
 
 const $ = (selector) => document.querySelector(selector);
 let demo = null;
