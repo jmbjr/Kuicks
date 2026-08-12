@@ -266,8 +266,26 @@ h3 {
 }
 .cell--legal {
   color: var(--navy-deep);
-  outline: 2px solid #fff;
+  background: #fff;
+  border-width: 3px;
+  border-style: solid;
   cursor: pointer;
+}
+.cell.cell--trail-sun.cell--legal {
+  background: #fff;
+  border-color: var(--sun);
+}
+.cell.cell--trail-spark.cell--legal {
+  background: #fff;
+  border-color: var(--coral);
+}
+.cell.cell--trail-wave.cell--legal {
+  background: #fff;
+  border-color: var(--sky);
+}
+.cell.cell--trail-leaf.cell--legal {
+  background: #fff;
+  border-color: var(--mint);
 }
 .cell.cell--trail-sun {
   background: var(--sun);

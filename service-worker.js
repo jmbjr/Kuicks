@@ -1,12 +1,12 @@
-const CACHE_NAME = "kuicks-full-trail-panels-v10";
+const CACHE_NAME = "kuicks-legal-move-outlines-v11";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./css/tokens.css?v=10",
-  "./css/app.css?v=10",
+  "./css/tokens.css?v=11",
+  "./css/app.css?v=11",
   "./js/config.js",
-  "./js/app.js?v=10",
+  "./js/app.js?v=11",
   "./js/ui/play-surface.js",
   "./js/cpu/choose-action.js",
   "./js/cpu/run-game.js",
