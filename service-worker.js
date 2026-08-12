@@ -1,12 +1,12 @@
-const CACHE_NAME = "kuicks-scorecard-colors-v9";
+const CACHE_NAME = "kuicks-full-trail-panels-v10";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./css/tokens.css?v=9",
-  "./css/app.css?v=9",
+  "./css/tokens.css?v=10",
+  "./css/app.css?v=10",
   "./js/config.js",
-  "./js/app.js?v=9",
+  "./js/app.js?v=10",
   "./js/ui/play-surface.js",
   "./js/cpu/choose-action.js",
   "./js/cpu/run-game.js",

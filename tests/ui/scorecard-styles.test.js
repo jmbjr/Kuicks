@@ -11,15 +11,21 @@ test("scorecard cell states have one authoritative, cache-versioned stylesheet",
     read("service-worker.js"),
   ]);
 
-  assert.match(html, /css\/app\.css\?v=9/);
+  assert.match(html, /css\/app\.css\?v=10/);
   assert.doesNotMatch(html, /trail-progress\.css/);
-  assert.match(serviceWorker, /css\/app\.css\?v=9/);
+  assert.match(serviceWorker, /css\/app\.css\?v=10/);
 
-  assert.match(css, /\.cell\{[^}]*background:#d8dde3/);
-  assert.match(css, /\.cell\.cell--trail-sun\{background:var\(--sun\)\}/);
-  assert.match(css, /\.cell\.cell--trail-spark\{background:var\(--coral\)\}/);
-  assert.match(css, /\.cell\.cell--trail-wave\{background:var\(--sky\)\}/);
-  assert.match(css, /\.cell\.cell--trail-leaf\{background:var\(--mint\)\}/);
-  assert.match(css, /\.cell--marked\{color:#000/);
-  assert.match(css, /\.cell\.cell--skipped\{[^}]*background:#343b45/);
+  assert.match(css, /\.trail-row--sun\s*\{[^}]*background:\s*var\(--sun\)/);
+  assert.match(css, /\.trail-row--spark\s*\{[^}]*background:\s*var\(--coral\)/);
+  assert.match(css, /\.trail-row--wave\s*\{[^}]*background:\s*var\(--sky\)/);
+  assert.match(css, /\.trail-row--leaf\s*\{[^}]*background:\s*var\(--mint\)/);
+  assert.doesNotMatch(css, /\.trail-row\s*\{[^}]*border-left/);
+
+  assert.match(css, /\.cell\s*\{[^}]*background:\s*#d8dde3/);
+  assert.match(css, /\.cell\.cell--trail-sun\s*\{[^}]*background:\s*var\(--sun\)/);
+  assert.match(css, /\.cell\.cell--trail-spark\s*\{[^}]*background:\s*var\(--coral\)/);
+  assert.match(css, /\.cell\.cell--trail-wave\s*\{[^}]*background:\s*var\(--sky\)/);
+  assert.match(css, /\.cell\.cell--trail-leaf\s*\{[^}]*background:\s*var\(--mint\)/);
+  assert.match(css, /\.cell--marked\s*\{[^}]*color:\s*#000/);
+  assert.match(css, /\.cell\.cell--skipped\s*\{[^}]*background:\s*#343b45/);
 });
