@@ -287,16 +287,28 @@ h3 {
   background: #fff;
   border-color: var(--mint);
 }
-.cell.cell--trail-sun {
+.cell.cell--future.cell--trail-sun {
+  background: #ded8c7;
+}
+.cell.cell--future.cell--trail-spark {
+  background: #ddc9c9;
+}
+.cell.cell--future.cell--trail-wave {
+  background: #cad8df;
+}
+.cell.cell--future.cell--trail-leaf {
+  background: #cbdad4;
+}
+.cell.cell--marked.cell--trail-sun {
   background: var(--sun);
 }
-.cell.cell--trail-spark {
+.cell.cell--marked.cell--trail-spark {
   background: var(--coral);
 }
-.cell.cell--trail-wave {
+.cell.cell--marked.cell--trail-wave {
   background: var(--sky);
 }
-.cell.cell--trail-leaf {
+.cell.cell--marked.cell--trail-leaf {
   background: var(--mint);
 }
 .cell--marked {

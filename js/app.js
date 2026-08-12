@@ -52,7 +52,7 @@ function renderSheet() {
         button.disabled = true;
         button.setAttribute("aria-label", `${trailNames[id]} ${value}, no longer available`);
       } else {
-        button.className = "cell";
+        button.className = `cell cell--future cell--trail-${id}`;
         button.disabled = true;
         button.setAttribute("aria-label", `${trailNames[id]} ${value}, not currently available`);
       }
