@@ -7,8 +7,8 @@
     <meta name="description" content="Kuicks — a quick, tactical dice game for the whole table.">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./css/tokens.css?v=14">
-  <link rel="stylesheet" href="./css/app.css?v=14">
+  <link rel="stylesheet" href="./css/tokens.css?v=15">
+  <link rel="stylesheet" href="./css/app.css?v=15">
     <title>Kuicks</title>
   </head>
   <body>
@@ -16,9 +16,13 @@
       <header class="brand"><div class="mark" aria-hidden="true">K</div><div><p class="eyebrow">Fast dice. Sharp choices.</p><h1>Kuicks</h1></div></header>
 
       <section id="setup-view" class="panel setup" aria-labelledby="setup-title">
-        <span class="phase-badge">Phase 5 checkpoint</span>
+        <span class="phase-badge">Phase 6 · Issue 8</span>
         <h2 id="setup-title">Build your table.</h2>
         <p>Play a complete game against CPU opponents, see the final scores, and start another game.</p>
+        <section id="resume-card" class="resume-card" hidden aria-labelledby="resume-title">
+          <div><strong id="resume-title">Game in progress</strong><span id="resume-details"></span></div>
+          <button id="continue-game" class="primary" type="button">Continue game</button>
+        </section>
         <form id="setup-form">
           <label for="player-name">Your name</label>
           <input id="player-name" name="playerName" maxlength="24" value="Player" autocomplete="nickname" required>
@@ -52,6 +56,6 @@
 
       <footer><span id="connection-status" role="status">Ready</span><span id="build-id">Build loading…</span></footer>
     </main>
-  <script type="module" src="./js/app.js?v=14"></script>
+  <script type="module" src="./js/app.js?v=15"></script>
   </body>
 </html>

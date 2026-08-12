@@ -1,12 +1,12 @@
-const CACHE_NAME = "kuicks-active-game-persistence-v14";
+const CACHE_NAME = "kuicks-saved-game-restore-v15";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./css/tokens.css?v=14",
-  "./css/app.css?v=14",
+  "./css/tokens.css?v=15",
+  "./css/app.css?v=15",
   "./js/config.js",
-  "./js/app.js?v=14",
+  "./js/app.js?v=15",
   "./js/ui/all-player-summary.js",
   "./js/ui/play-surface.js",
   "./js/cpu/choose-action.js",

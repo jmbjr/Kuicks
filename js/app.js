@@ -2,12 +2,13 @@ import { BUILD_ID } from "./config.js";
 import { createPlaySurfaceDemo, chooseTable, chooseKick } from "./ui/play-surface.js";
 import { TRAILS, TRAIL_IDS } from "./rules/model.js";
 import { createSummaryModel, SUMMARY_LAYOUTS } from "./ui/all-player-summary.js";
-import { saveActiveGame } from "./game/persistence.js";
+import { loadActiveGame, saveActiveGame } from "./game/persistence.js";
 
 const $ = (selector) => document.querySelector(selector);
 let demo = null;
 let summaryLayout = SUMMARY_LAYOUTS.PLAYERS;
 const trailNames = { sun: "Sun", spark: "Spark", wave: "Wave", leaf: "Leaf" };
+let savedEnvelope = loadActiveGame();
 
 $("#build-id").textContent = `Build ${BUILD_ID}`;
 function connection() { $("#connection-status").textContent = navigator.onLine ? "Ready" : "Offline"; }
@@ -158,6 +159,23 @@ function render() {
   }
 }
 
+function showGame(game) {
+  demo = game;
+  $("#setup-view").hidden = true;
+  $("#game-view").hidden = false;
+  render();
+}
+
+function renderResumeCard() {
+  const card = $("#resume-card");
+  if (!savedEnvelope) { card.hidden = true; return; }
+  const game = savedEnvelope.game;
+  const active = game.state.participants[game.state.currentSeat];
+  const human = game.state.participants[0];
+  $("#resume-details").textContent = `${human.name} · Turn ${game.state.turn} · ${active.name} active · ${game.phase === "kick" ? "Kick" : "Table"} choice`;
+  card.hidden = false;
+}
+
 function applyChoice(choice) {
   demo = demo.phase === "table" ? chooseTable(demo, choice) : chooseKick(demo, choice);
   saveActiveGame(demo);
@@ -167,9 +185,17 @@ function applyChoice(choice) {
 $("#setup-form").addEventListener("submit", (event) => {
   event.preventDefault(); const name = $("#player-name").value.trim();
   if (!name) { $("#setup-error").textContent = "Enter your name to start."; return; }
+  if (savedEnvelope && !confirm("Start a new game and replace the unfinished saved game?")) return;
   demo = createPlaySurfaceDemo(name, Number($("#cpu-count").value), 20260811);
   saveActiveGame(demo);
-  $("#setup-view").hidden = true; $("#game-view").hidden = false; render();
+  savedEnvelope = null;
+  showGame(demo);
+});
+$("#continue-game").addEventListener("click", () => {
+  const current = loadActiveGame();
+  if (!current) { savedEnvelope = null; renderResumeCard(); return; }
+  savedEnvelope = current;
+  showGame(current.game);
 });
 $("#restart-demo").addEventListener("click", () => location.reload());
 $("#summary-toggle").addEventListener("click", () => {
@@ -178,3 +204,4 @@ $("#summary-toggle").addEventListener("click", () => {
 });
 
 if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js"));
+renderResumeCard();
